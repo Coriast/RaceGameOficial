@@ -6,6 +6,7 @@
 GLFW/
 
 # User-specific files
+*.json
 *.rsuser
 *.suo
 *.user
