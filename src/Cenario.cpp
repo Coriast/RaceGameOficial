@@ -33,14 +33,30 @@ void Cenario::DesenhaCena(){
 
 void Cenario::DesenhaEstrada() {
 
+	/*
+	// Desenha a Estrada
 	float xE, yE;
 	xE = RoadRatio * xC;
 	yE = yC;
-	glColor3f(0.0, 0.0, 1.0);
+	glColor3f(0.1, 0.1, 0.1);
 	glBegin(GL_QUADS);
 		glVertex3f(-xE, -yE, -0.1);
 		glVertex3f(xE, -yE, -0.1);
 		glVertex3f(xE, 0.0, -zAxis);
 		glVertex3f(-xE, 0.0, -zAxis);
 	glEnd();
+	*/
+	// Desenha Linhas da Estrada
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_QUADS);
+	for (int i = 0; i < q_Strips; i++)
+	{
+		float x = RoadStrip[i][0], y = RoadStrip[i][1];
+		glVertex3f(-x, -(y + StripSize), -0.1);
+		glVertex3f(x, -(y + StripSize), -0.1);
+		glVertex3f(x, -y, -zAxis);
+		glVertex3f(-x, -y, -zAxis);
+	}
+	glEnd();
+
 }
