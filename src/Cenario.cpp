@@ -1,6 +1,12 @@
 #include "Cenario.hpp"
 
 // Parametros
+float RoadStrip[q_Strips][2] = { {0.3, 0.0},
+								 {0.3, 4.5}, 
+								 {0.3, 9.0},
+								 {0.3, 13.5},
+								 {0.3, 18.0} };
+float StripVel = 5.0;
 
 // Construtores
 Cenario::Cenario(float xC, float yC, float zAxis) {
@@ -18,32 +24,32 @@ void Cenario::DesenhaCena(){
 	glColor3f(0.0, 0.6, 0.0);
 	glBegin(GL_QUADS);
 		// Margem esquerda da estrada
-		glVertex3f(-0.1, -0.1, -0.1);
-		glVertex3f(-0.02, -0.1, -0.1);
-		glVertex3f(-0.02, 0.0, -0.1);
-		glVertex3f(-0.1, 0.0, -0.1);
+		glVertex3f(-RoadLine, -yC, -zAxis);
+		glVertex3f(-xC, -yC, -zAxis);
+		glVertex3f(-xC, 0.0, -zAxis);
+		glVertex3f(-RoadLine, 0.0, -zAxis);
 
 		// Margem direita da estrada
-		glVertex3f(RoadLine, -yC, -0.1);
-		glVertex3f(xC, -yC, -0.1);
-		glVertex3f(xC, 0.0, -0.1);
-		glVertex3f(RoadLine, 0.0, -0.1);
+		glVertex3f(RoadLine, -yC, -zAxis);
+		glVertex3f(xC, -yC, -zAxis);
+		glVertex3f(xC, 0.0, -zAxis);
+		glVertex3f(RoadLine, 0.0, -zAxis);
 	glEnd();
 }
 
 void Cenario::DesenhaEstrada() {
 
-	/*
+	
 	// Desenha a Estrada
 	float xE, yE;
 	xE = RoadRatio * xC;
 	yE = yC;
 	glColor3f(0.1, 0.1, 0.1);
 	glBegin(GL_QUADS);
-		glVertex3f(-xE, -yE, -0.1);
-		glVertex3f(xE, -yE, -0.1);
-		glVertex3f(xE, 0.0, -0.1);
-		glVertex3f(-xE, 0.0, -0.1);
+		glVertex3f(-xE, -yE, -zAxis);
+		glVertex3f(xE, -yE, -zAxis);
+		glVertex3f(xE, 0.0, -zAxis);
+		glVertex3f(-xE, 0.0, -zAxis);
 	glEnd();
 	
 	// Desenha Linhas da Estrada
@@ -52,12 +58,33 @@ void Cenario::DesenhaEstrada() {
 	glBegin(GL_QUADS);
 	for (int i = 0; i < q_Strips; i++)
 	{
-		float x = RoadStrip[i][0], y = RoadStrip[i][1];
-		glVertex3f(-x, -(y + StripSize), -0.1);
-		glVertex3f(x, -(y + StripSize), -0.1);
-		glVertex3f(x, -y, -0.1);
-		glVertex3f(-x, -y, -0.1);
+		float* xs = &RoadStrip[i][0];
+		float* ys = &RoadStrip[i][1];
+
+		// Coordenadas de Baixo 
+		if ((*ys + StripSize) > yC) {
+			glVertex3f(-*xs, -yC, -zAxis + 0.1);
+			glVertex3f(*xs, -yC, -zAxis + 0.1);
+		}
+		else {
+			glVertex3f(-*xs, -(*ys + StripSize), -zAxis + 0.1);
+			glVertex3f(*xs, -(*ys + StripSize), -zAxis + 0.1);
+		}
+
+		// Coordenadas de Cima
+		if (*ys < 0.0) {
+			glVertex3f(*xs, 0.0, -zAxis + 0.1);
+			glVertex3f(-*xs, 0.0, -zAxis + 0.1);
+		}
+		else {
+			glVertex3f(*xs, -*ys, -zAxis + 0.1);
+			glVertex3f(-*xs, -*ys, -zAxis + 0.1);
+		}
+		
+		*ys += StripVel * (1.0 / 60.0);
+		if (*ys > yC) {
+			*ys = -StripSize;
+		}
 	}
 	glEnd();
-	*/
 }

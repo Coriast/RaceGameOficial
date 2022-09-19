@@ -45,7 +45,7 @@ int main()
 
 	iniciar();
 
-	Cenario cena(1.0, 1.0);
+	Cenario cena(20.0, 20.0, 50.0);
 
 	while (!glfwWindowShouldClose(window)) {
 		// Processamento de Eventos
