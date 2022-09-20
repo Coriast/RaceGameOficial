@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <gl/GLU.h>
 #include "Cenario.hpp"
+#include "Carro.hpp"
 
 // Variáveis para FPS
 float FPS = 60.0f, now = 0.0f, dt = 0.0f, lastTime = 0.0f;

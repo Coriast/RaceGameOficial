@@ -6,7 +6,7 @@ float RoadStrip[q_Strips][2] = { {0.3, 0.0},
 								 {0.3, 12.0},
 								 {0.3, 18.0} };
 
-float StripVel = 32.5;
+float StripVel = 6.5;
 
 // Construtores
 Cenario::Cenario(float xC, float yC, float zAxis) {
