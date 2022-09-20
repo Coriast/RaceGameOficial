@@ -2,11 +2,11 @@
 
 // Parametros
 float RoadStrip[q_Strips][2] = { {0.3, 0.0},
-								 {0.3, 4.5}, 
-								 {0.3, 9.0},
-								 {0.3, 13.5},
+								 {0.3, 6.0}, 
+								 {0.3, 12.0},
 								 {0.3, 18.0} };
-float StripVel = 5.0;
+
+float StripVel = 32.5;
 
 // Construtores
 Cenario::Cenario(float xC, float yC, float zAxis) {

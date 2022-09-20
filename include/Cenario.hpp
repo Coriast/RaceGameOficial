@@ -4,7 +4,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
-const int q_Strips = 5;
+const int q_Strips = 4;
 
 class Cenario {
 public:
@@ -13,7 +13,7 @@ public:
 	float xC, yC;
 	float zAxis = 0.0;
 
-	float StripSize = 3.0;
+	float StripSize = 3.5;
 
 	// Construtores
 	Cenario(float xC, float yC, float zAxis);
