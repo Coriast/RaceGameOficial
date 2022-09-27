@@ -21,7 +21,7 @@ public:
 
 	// Metodos
 	void DesenhaCena();
-	void DesenhaEstrada();
+	void DesenhaEstrada(float JogadorVel);
 };
 
 

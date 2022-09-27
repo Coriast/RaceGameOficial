@@ -6,7 +6,7 @@ float RoadStrip[q_Strips][2] = { {0.3, 0.0},
 								 {0.3, 12.0},
 								 {0.3, 18.0} };
 
-float StripVel = 6.5;
+float StripVel = 0.0;
 
 // Construtores
 Cenario::Cenario(float xC, float yC, float zAxis) {
@@ -25,20 +25,20 @@ void Cenario::DesenhaCena(){
 	glBegin(GL_QUADS);
 		// Margem esquerda da estrada
 		glVertex3f(-RoadLine, -yC, -zAxis);
-		glVertex3f(-xC, -yC, -zAxis);
-		glVertex3f(-xC, 0.0, -zAxis);
+		glVertex3f(-100, -yC, -zAxis);
+		glVertex3f(-100, 0.0, -zAxis);
 		glVertex3f(-RoadLine, 0.0, -zAxis);
 
 		// Margem direita da estrada
 		glVertex3f(RoadLine, -yC, -zAxis);
-		glVertex3f(xC, -yC, -zAxis);
-		glVertex3f(xC, 0.0, -zAxis);
+		glVertex3f(100, -yC, -zAxis);
+		glVertex3f(100, 0.0, -zAxis);
 		glVertex3f(RoadLine, 0.0, -zAxis);
 	glEnd();
 }
 
-void Cenario::DesenhaEstrada() {
-
+void Cenario::DesenhaEstrada(float JogadorVel) {
+	StripVel = JogadorVel;
 	
 	// Desenha a Estrada
 	float xE, yE;
@@ -63,22 +63,22 @@ void Cenario::DesenhaEstrada() {
 
 		// Coordenadas de Baixo 
 		if ((*ys + StripSize) > yC) {
-			glVertex3f(-*xs, -yC, -zAxis + 0.1);
-			glVertex3f(*xs, -yC, -zAxis + 0.1);
+			glVertex3f(-*xs, -yC, -zAxis + 0.01);
+			glVertex3f(*xs, -yC, -zAxis + 0.01);
 		}
 		else {
-			glVertex3f(-*xs, -(*ys + StripSize), -zAxis + 0.1);
-			glVertex3f(*xs, -(*ys + StripSize), -zAxis + 0.1);
+			glVertex3f(-*xs, -(*ys + StripSize), -zAxis + 0.01);
+			glVertex3f(*xs, -(*ys + StripSize), -zAxis + 0.01);
 		}
 
 		// Coordenadas de Cima
 		if (*ys < 0.0) {
-			glVertex3f(*xs, 0.0, -zAxis + 0.1);
-			glVertex3f(-*xs, 0.0, -zAxis + 0.1);
+			glVertex3f(*xs, 0.0, -zAxis + 0.01);
+			glVertex3f(-*xs, 0.0, -zAxis + 0.01);
 		}
 		else {
-			glVertex3f(*xs, -*ys, -zAxis + 0.1);
-			glVertex3f(-*xs, -*ys, -zAxis + 0.1);
+			glVertex3f(*xs, -*ys, -zAxis + 0.01);
+			glVertex3f(-*xs, -*ys, -zAxis + 0.01);
 		}
 		
 		*ys += StripVel * (1.0 / 60.0);
