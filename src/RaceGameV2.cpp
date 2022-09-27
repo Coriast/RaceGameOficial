@@ -27,7 +27,7 @@ float En_Vel[4] = { 22.0, 30.0, 17.5, 45.0 };
 float FPS = 60.0f, now = 0.0f, dt = 0.0f, lastTime = 0.0f;
 
 // Inicializar Câmera
-bool VisaoJogador = true;
+bool VisaoJogador = false;
 Camera camera(vec3(0, 0, 0));
 
 void iniciar() {

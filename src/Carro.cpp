@@ -104,9 +104,8 @@ void DesenhaPoligono(float cor[3], GLfloat raio, GLuint nLados) {
 	pt.push_back(index);
 	indices.push_back(pt);
 
-	// Plotar os pontos
+	// Inicia Desenho
 	glColor3f(corCostas[0], corCostas[1], corCostas[2]);
-	   
 	glBegin(GL_POLYGON);
 	for (GLuint i = 0; i < pontos.size(); i++)
 	{
@@ -160,8 +159,21 @@ void DesenhaPoligono(float cor[3], GLfloat raio, GLuint nLados) {
 	glEnd();
 }
 
-void Carro::DesenhaRodas(GLfloat rodaPos[3]) {
-	int lados = 8;
+void Carro::DesenhaRodas(GLfloat rodaPos[3], int id) {
+	float corFrentePadrao[3] = { corFrente[0], corFrente[1], corFrente[2] };
+	float corCostasPadrao[3] = { corCostas[0], corCostas[1], corCostas[2] };
+
+	if (id != 0) {
+		corFrentePadrao[0] = corFrenteEn[id - 1][0];
+		corFrentePadrao[1] = corFrenteEn[id - 1][1];
+		corFrentePadrao[2] = corFrenteEn[id - 1][2];
+
+		corCostasPadrao[0] = corCostasEn[id - 1][0];
+		corCostasPadrao[1] = corCostasEn[id - 1][1];
+		corCostasPadrao[2] = corCostasEn[id - 1][2];
+	}
+	
+	int lados = 6;
 
 	rotacionaRoda = rotacionaRoda - (5.0 * CarroVel) * (1.0/60.0);
 
@@ -169,28 +181,28 @@ void Carro::DesenhaRodas(GLfloat rodaPos[3]) {
 	glTranslatef(rodaPos[0] - (CarSize/3), rodaPos[1] - (CarSize / 2), rodaPos[2]);
 	glRotatef(rotacionaRoda, 1.0, 0.0, 0.0);
 	glRotatef(180.0, 0.0, 0.0, 1.0);
-	DesenhaPoligono(corFrente, rodaTam, lados);
+	DesenhaPoligono(corFrentePadrao, rodaTam, lados);
 	glPopMatrix();
 	
 	glPushMatrix();
 	glTranslatef(rodaPos[0] + (CarSize / 3), rodaPos[1] - (CarSize / 2), rodaPos[2]);
 	glRotatef(rotacionaRoda, 1.0, 0.0, 0.0);
 	glRotatef(0.0, 0.0, 0.0, 0.0);
-	DesenhaPoligono(corFrente, rodaTam, lados);
+	DesenhaPoligono(corFrentePadrao, rodaTam, lados);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(rodaPos[0] - (CarSize / 3), rodaPos[1] + (CarSize / 2), rodaPos[2]);
 	glRotatef(rotacionaRoda, 1.0, 0.0, 0.0);
 	glRotatef(180.0, 0.0, 0.0, 1.0);
-	DesenhaPoligono(corFrente, rodaTam, lados);
+	DesenhaPoligono(corFrentePadrao, rodaTam, lados);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(rodaPos[0] + (CarSize / 3), rodaPos[1] + (CarSize / 2), rodaPos[2]);
 	glRotatef(rotacionaRoda, 1.0, 0.0, 0.0);
 	glRotatef(0.0, 0.0, 0.0, 0.0);
-	DesenhaPoligono(corFrente, rodaTam, lados);
+	DesenhaPoligono(corFrentePadrao, rodaTam, lados);
 	glPopMatrix();
 	if (rotacionaRoda > 360.0)
 		rotacionaRoda = 0.0;
@@ -209,5 +221,5 @@ void Carro::DesenhaCarro(float pos_[3], int id, float Vel) {
 	CarroVel = Vel;
 
 	GLfloat rodaPos[3] = { pos_[0], pos_[1], -(zAxis-rodaTam)};
-	DesenhaRodas(rodaPos);
+	DesenhaRodas(rodaPos, id);
 }

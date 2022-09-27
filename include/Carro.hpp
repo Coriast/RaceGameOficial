@@ -17,7 +17,7 @@ public:
 	Carro(float CarSize, float zAxis);
 
 	// Métodos
-	void DesenhaRodas(GLfloat rodaPos[3]);
+	void DesenhaRodas(GLfloat rodaPos[3], int id);
 	void DesenhaCarro(float pos_[3], int id, float Vel);
 
 };
