@@ -8,7 +8,7 @@
 #include "Camera.hpp"
 
 // Tamanho da Estrada
-float roadSize = 30.0;
+float roadSize = 130.0;
 
 // jogador
 float JogadorPos[3] = { 2.0, -roadSize + 2.0, 0.0 };
@@ -27,7 +27,7 @@ float En_Vel[4] = { 22.0, 30.0, 17.5, 45.0 };
 float FPS = 60.0f, now = 0.0f, dt = 0.0f, lastTime = 0.0f;
 
 // Inicializar Câmera
-bool VisaoJogador = false;
+bool VisaoJogador = true;
 Camera camera(vec3(0, 0, 0));
 
 void iniciar() {
@@ -89,7 +89,7 @@ void checaEventos(GLFWwindow* window) {
 		if (JogadorVel < 0.0)
 			JogadorVel = 0.0;
 	}
-	std::cout << JogadorVel << std::endl;
+	//std::cout << JogadorVel << std::endl;
 
 	// Checagens do Inimigo
 	EventosInimigo();
@@ -159,6 +159,8 @@ void desenha(Cenario cena, Carro jogador, Carro inimigo) {
 
 int main()
 {
+	HWND consoleWindow = GetConsoleWindow();
+	SetWindowPos(consoleWindow, 0, 700, 300, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	const int LARGURA = 800, ALTURA = 600;
 
 	glfwInit();
@@ -167,7 +169,7 @@ int main()
 
 	// Criar Tela
 	GLFWwindow* window = glfwCreateWindow(LARGURA, ALTURA, "Race Game", NULL, NULL);
-	glfwSetWindowPos(window, 300, 100);
+	glfwSetWindowPos(window, 800, 300);
 
 	glfwMakeContextCurrent(window);
 
