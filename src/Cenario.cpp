@@ -12,6 +12,11 @@ float pL = 0.2;
 
 float xCloud = 0.0, cloudH = 15.0;
 
+float CrashPos[3] = { 7.0, 10.0, 0.0 }, angle = 0.0;
+
+void DesenhaAcidente(float yC) {
+}
+
 void DesenhaPlaca(float zAxis, float yC) {
 	if (invert) 
 		placaPos[0] = placaPos[0] * -1;
@@ -116,6 +121,7 @@ void Cenario::DesenhaCena(){
 	placaPos[0] = RoadLine + 0.5;
 	DesenhaPlaca(zAxis, yC);
 	DesenhaCeu(zAxis);
+	DesenhaAcidente(yC);
 }
 
 void Cenario::DesenhaEstrada(float JogadorVel) {
