@@ -5,6 +5,75 @@ float RoadStrip[q_Strips][2] = {};
 float space = 0.0;
 float StripVel = 0.0;
 float BufferStrip[2] = { 0.3, 0.0 }; bool useBuffer = false;
+float RoadLine = 0.0;
+
+float placaPos[3] = { RoadLine + 0.5, 0.0, 2.5 }; bool invert = false;
+float pL = 0.2;
+
+float xCloud = 0.0, cloudH = 15.0;
+
+void DesenhaPlaca(float zAxis, float yC) {
+	if (invert) 
+		placaPos[0] = placaPos[0] * -1;
+
+	// desenha Suporte 
+	glColor3ub(105, 105, 105);
+	glBegin(GL_QUADS);
+	glVertex3f(placaPos[0], -placaPos[1], -zAxis);
+	glVertex3f(placaPos[0] + pL, -placaPos[1], -zAxis);
+	glVertex3f(placaPos[0] + pL, -placaPos[1], -(zAxis - placaPos[2]));
+	glVertex3f(placaPos[0], -placaPos[1], -(zAxis - placaPos[2]));
+	glEnd();
+
+	float pA = (zAxis - (placaPos[2] + (pL*5)));
+	// Desenha Placa
+	glColor3ub(255, 32, 21);
+	glBegin(GL_QUADS);	
+	glVertex3f(placaPos[0] - (pL*2), -placaPos[1], -(zAxis - placaPos[2]));
+	glVertex3f(placaPos[0] + pL*3, -placaPos[1], -(zAxis - placaPos[2]));
+	glVertex3f(placaPos[0] + pL*3, -placaPos[1], -pA);
+	glVertex3f(placaPos[0] - (pL*2), -placaPos[1], -pA);
+	glEnd();
+
+
+
+	placaPos[1] = placaPos[1] + StripVel * (1.0 / 60.0);
+	if (placaPos[1] > yC * 2) {
+		placaPos[1] = 0.0;
+		if (invert)
+			invert = false;
+		else
+			invert = true;
+	}
+}
+
+void DesenhaCeu(float zAxis) {
+	glColor3ub(35, 16, 121);
+	glBegin(GL_QUADS);
+	glVertex3f(-500.0, 0.0, -zAxis);
+	glVertex3f(500.0, 0.0, -zAxis);
+	glVertex3f(500.0, 0.0, 0.0);
+	glVertex3f(-500.0, 0.0, 0.0);
+	glEnd();
+
+	float zC = (zAxis - cloudH);
+	glColor3ub(240, 234, 214);
+	glBegin(GL_QUADS);
+	glVertex3f(-xCloud, -10.0, -zC);
+	glVertex3f(-(xCloud - 5.0), -10.0, -zC);
+	glVertex3f(-(xCloud - 5.0), -10.0, -(zC - 3.0));
+	glVertex3f(-xCloud, -10.0, -(zC - 3.0));
+
+	glVertex3f(-(xCloud - 5.0), -10.0, -zC);
+	glVertex3f(-(xCloud - 15.0), -10.0, -zC);
+	glVertex3f(-(xCloud - 15.0), -10.0, -(zC - 7.0));
+	glVertex3f(-(xCloud - 5.0), -10.0, -(zC - 7.0));
+	glEnd();
+
+	xCloud = xCloud + 14.0 * (1.0 / 60.0);
+	if (xCloud > 100.0)
+		xCloud = -100.0;
+}
 
 // Construtores
 Cenario::Cenario(float xC, float yC, float zAxis) {
@@ -43,6 +112,10 @@ void Cenario::DesenhaCena(){
 		glVertex3f(100, 0.0, -zAxis);
 		glVertex3f(RoadLine, 0.0, -zAxis);
 	glEnd();
+
+	placaPos[0] = RoadLine + 0.5;
+	DesenhaPlaca(zAxis, yC);
+	DesenhaCeu(zAxis);
 }
 
 void Cenario::DesenhaEstrada(float JogadorVel) {

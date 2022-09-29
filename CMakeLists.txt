@@ -3,6 +3,8 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
+
+
 project (RaceGameV2)
 
 # Add source to this project's executable.
@@ -15,11 +17,9 @@ add_executable (RaceGameV2 ${SOURCES})
 
 find_package(OpenGL REQUIRED)
 
-add_subdirectory("include/GLFW")
-
-target_link_libraries(RaceGameV2 glfw ${OPENGL_LIBRARY})
+find_package(glfw3 CONFIG REQUIRED)
 
 
-
+target_link_libraries(RaceGameV2 PRIVATE glfw ${OPENGL_LIBRARY})
 
 # TODO: Add tests and install targets if needed.
