@@ -2,6 +2,7 @@
 #define CENARIO_HPP
 
 #include <iostream>
+#include <vector>
 #include <GLFW/glfw3.h>
 
 const int q_Strips = 8;
@@ -22,6 +23,7 @@ public:
 	// Metodos
 	void DesenhaCena();
 	void DesenhaEstrada(float JogadorVel);
+	void DesenhaArvore(float yC, int lados, float raio);
 };
 
 

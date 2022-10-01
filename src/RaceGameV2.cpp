@@ -27,7 +27,7 @@ float En_Vel[4] = { 22.0, 30.0, 17.5, 45.0 };
 float FPS = 60.0f, now = 0.0f, dt = 0.0f, lastTime = 0.0f;
 
 // Inicializar Câmera
-bool VisaoJogador = true;
+bool VisaoJogador = false;
 Camera camera(vec3(0, 0, 0));
 
 void iniciar() {
@@ -117,7 +117,6 @@ void desenhaCoordenadas() {
 	glPushMatrix();
 	// Preciso mandar minha rota de Coordenadas para o -55 do meu Z se não fica fora da visão
 	glTranslatef(0.0, 0.0, -55.0);
-
 	glBegin(GL_LINES);
 	glColor3f(1, 0, 0);
 	glVertex3f(-500.0, 0.0, 0.0);
@@ -141,11 +140,12 @@ void desenha(Cenario cena, Carro jogador, Carro inimigo) {
 		camera.VisaoJogador(vec3(JogadorPos[0], JogadorPos[1], -52.0));
 	}	
 	else {
-		camera.VisaoPadrao(vec3(JogadorPos[0], JogadorPos[1]/2, 0.0));
+		camera.VisaoPadrao(vec3(JogadorPos[0], JogadorPos[1]/20, 0.0));
 	}
-
+	
 	desenhaCoordenadas();
-
+	cena.DesenhaArvore(55.0, 6, 10.0);
+	/*
 	cena.DesenhaCena();
 	cena.DesenhaEstrada(JogadorVel);
 
@@ -155,6 +155,7 @@ void desenha(Cenario cena, Carro jogador, Carro inimigo) {
 		if (desenhaEn[i])
 			inimigo.DesenhaCarro(En_Pos[i], i+1, En_Vel[i]);
 	}
+	*/
 }
 
 int main()

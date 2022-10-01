@@ -140,6 +140,8 @@ void DesenhaPoligono(float cor[3], GLfloat raio, GLuint nLados) {
 	}
 	glEnd();
 
+
+	// Desenhar as Linhas da roda
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_LINES);
 	for (GLuint i = 0; i < pontos.size() - 1; i++)

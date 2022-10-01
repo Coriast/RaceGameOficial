@@ -19,7 +19,8 @@ find_package(OpenGL REQUIRED)
 
 find_package(glfw3 CONFIG REQUIRED)
 
+find_package(glm CONFIG REQUIRED)
 
-target_link_libraries(RaceGameV2 PRIVATE glfw ${OPENGL_LIBRARY})
+target_link_libraries(RaceGameV2 PRIVATE glfw ${OPENGL_LIBRARY} glm::glm)
 
 # TODO: Add tests and install targets if needed.
