@@ -23,7 +23,7 @@ public:
 	// Metodos
 	void DesenhaCena();
 	void DesenhaEstrada(float JogadorVel);
-	void DesenhaArvore(float yC, int lados, float raio);
+	void DesenhaArvore(float zAxis, int lados, float raio, float yC);
 };
 
 

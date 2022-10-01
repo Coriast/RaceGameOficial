@@ -27,7 +27,7 @@ float En_Vel[4] = { 22.0, 30.0, 17.5, 45.0 };
 float FPS = 60.0f, now = 0.0f, dt = 0.0f, lastTime = 0.0f;
 
 // Inicializar Câmera
-bool VisaoJogador = false;
+bool VisaoJogador = true;
 Camera camera(vec3(0, 0, 0));
 
 void iniciar() {
@@ -140,12 +140,11 @@ void desenha(Cenario cena, Carro jogador, Carro inimigo) {
 		camera.VisaoJogador(vec3(JogadorPos[0], JogadorPos[1], -52.0));
 	}	
 	else {
-		camera.VisaoPadrao(vec3(JogadorPos[0], JogadorPos[1]/20, 0.0));
+		camera.VisaoPadrao(vec3(JogadorPos[0], JogadorPos[1]/2, 0.0));
 	}
 	
 	desenhaCoordenadas();
-	cena.DesenhaArvore(55.0, 6, 10.0);
-	/*
+	
 	cena.DesenhaCena();
 	cena.DesenhaEstrada(JogadorVel);
 
@@ -155,7 +154,7 @@ void desenha(Cenario cena, Carro jogador, Carro inimigo) {
 		if (desenhaEn[i])
 			inimigo.DesenhaCarro(En_Pos[i], i+1, En_Vel[i]);
 	}
-	*/
+	
 }
 
 int main()

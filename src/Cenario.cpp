@@ -2,8 +2,6 @@
 #include <glm/ext.hpp>
 #include "Cenario.hpp"
 
-float rotate = 1.0;
-
 // Parametros
 float RoadStrip[q_Strips][2] = {};
 float space = 0.0;
@@ -16,9 +14,9 @@ float pL = 0.2;
 
 float xCloud = 0.0, cloudH = 15.0;
 
-float CrashPos[3] = { 7.0, 10.0, 0.0 }, angle = 0.0;
+float yArvore = 45.0;
 
-void DesenhaFace(float yC, int lados, float raio, GLfloat PI) {
+void DesenhaFace(float yC, int lados, GLfloat PI) {
 
 	std::vector<glm::vec3> pontos;
 
@@ -61,45 +59,56 @@ void DesenhaFace(float yC, int lados, float raio, GLfloat PI) {
 	glEnd();
 }
 
-void Cenario::DesenhaArvore(float yC, int lados, float raio) {
+void Cenario::DesenhaArvore(float zAxis, int lados, float raio, float yC) {
 	const GLfloat PI = 3.14159265359;
-
+	float alt = (raio * 10)/2;
 	// Transformações
-	glm::vec3 pos = glm::vec3(0, 0, -yC);
+	glm::vec3 pos = glm::vec3(8, -yArvore, -(zAxis-alt));
 	glm::mat4 M = glm::mat4(1);
 
 	// Estas são as transformações gerais do Objeto de forma complexa
 	glm::mat4 T = glm::translate(M, pos);
-	glm::mat4 R = glm::rotate(M, (float)glm::radians(90.0), glm::vec3(1, 0, 0));
-	glm::mat4 S = glm::scale(M, glm::vec3(1, 1, 1));
+	glm::mat4 R = glm::rotate(M, (float)glm::radians(0.0), glm::vec3(1, 0, 0));
+	glm::mat4 S = glm::scale(M, glm::vec3(raio, raio, raio));
 	glm::mat4 F = glm::mat4(1);
 	F = T * R * S;
 
 	// Estas são as transformações que vão ser aplicadas apenas para partes específicas
 	glm::mat4 Td = glm::translate(M, glm::vec3(0, 0, 0));
 	glm::mat4 Rd = glm::rotate(M, (float)glm::radians(0.0), glm::vec3(0, 1, 0));
-	glm::mat4 Sd = glm::scale(M, glm::vec3(2, 2, 5));
+	glm::mat4 Sd = glm::scale(M, glm::vec3(2, 2, 6));
 	glm::mat4 Fd = glm::mat4(1);
 	Fd = (T * Td) * (R * Rd) * (S * Sd); // uma multiplicação entre as matrizes padrões com a matriz própria de uma parte
 	
-	glm::mat4 Te = glm::translate(M, glm::vec3(0, 8, 0));
+	glm::mat4 Te = glm::translate(M, glm::vec3(0, 0, 5*raio));
 	glm::mat4 Re = glm::rotate(M, (float)glm::radians(90.0), glm::vec3(1, 0, 0));
-	glm::mat4 Se = glm::scale(M, glm::vec3(5, 5, 5));
+	glm::mat4 Se = glm::scale(M, glm::vec3(4, 4, 4));
 	glm::mat4 Fe = glm::mat4(1);
 	Fe = (T * Te) * (R * Re) * (S * Se); // uma multiplicação entre as matrizes padrões com a matriz própria de uma parte
 
 	glColor3ub(36, 26, 24);
 	glPushMatrix();
 	glMultMatrixf(glm::value_ptr(Fd));
-	DesenhaFace(yC, lados, raio, PI);
+	DesenhaFace(yC, lados, PI);
 	glPopMatrix();
 
-	
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glColor3ub(86, 125, 67);
+	glPushMatrix();
+	glMultMatrixf(glm::value_ptr(Fe));
+	DesenhaFace(yC, lados, PI);
+	glPopMatrix();
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glColor3ub(66, 105, 47);
 	glPushMatrix();
 	glMultMatrixf(glm::value_ptr(Fe));
-	DesenhaFace(yC, lados, raio, PI);
+	DesenhaFace(yC, lados, PI);
 	glPopMatrix();
+
+	yArvore = yArvore + StripVel * (1.0 / 60.0);
+	if (yArvore > yC * 2)
+		yArvore = -15.0;
 }
 
 void DesenhaPlaca(float zAxis, float yC) {
@@ -206,6 +215,7 @@ void Cenario::DesenhaCena(){
 	placaPos[0] = RoadLine + 0.5;
 	DesenhaPlaca(zAxis, yC);
 	DesenhaCeu(zAxis);
+	DesenhaArvore(zAxis, 6, 0.8, yC);
 }
 
 void Cenario::DesenhaEstrada(float JogadorVel) {
