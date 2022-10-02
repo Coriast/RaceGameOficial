@@ -2,7 +2,7 @@
 
 Versão final do primeiro projeto da matéria de CG
 
-###Dependências
+### Dependências
 
 - GLM
 - GLFW
